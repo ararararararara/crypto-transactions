@@ -25,11 +25,13 @@
 열쇠가 없다면 이 실험을 20번만 반복해도 100만분의 1확률이 된다.
 
 이 실험은 검증자 외에 어떤 정보도 주지 않고 캠코더로 녹화해도 다른 사람들에겐 증명이 안되지만 검증자에게만 유효한 증명이 된다.
+
 현재 영지식 증명을 사용하는 코인들은 Zcash, Zcoin, Pvix, Kurrent, Spectre등이 있다.
 
 # 공개 키 암호화 및 서명
 공개 키 암호화 에는 비밀 키와 공개 키라는 키 쌍이 있습니다. 
-https://lhartikk.github.io/assets/Digital_signatures.png
+![Digital_signatures](https://user-images.githubusercontent.com/89236248/150672018-93cf8496-fd81-4206-bb7c-ca153e4a95d2.png)
+
 
 공개 키는 비밀 키에서 파생될 수 있지만 비밀 키는 공개 키에서 파생될 수 없습니다. 
 공개 키(이름에서 알 수 있듯이)는 누구에게나 안전하게 공유될 수 있습니다.
@@ -39,11 +41,12 @@ https://lhartikk.github.io/assets/Digital_signatures.png
 유효한 공개키는 64바이트 문자열
 
 # 거래구조
-https://lhartikk.github.io/assets/transactions.png
+
 트랜잭션은 입력과 출력의 두가지 요소로 구성
 출력은 코인이 전송되는 위치를 지정하고 입력은 실제로 전송된 코인이 첨음에 존재하고 보낸사람이 소유하고 있다는 증거를 제공
 
 # 트랜잭션 출력
+![transactions](https://user-images.githubusercontent.com/89236248/150672027-437c11e5-d3ee-4e4d-9408-f959a6460c38.png)
 
 ```
 class TxOut {
@@ -65,7 +68,8 @@ class TxIn {
     }
 }
 ```
-https://lhartikk.github.io/assets/transactions2.png
+![transactions2](https://user-images.githubusercontent.com/89236248/150672036-66a1094e-ef1b-45c5-8475-ef6baa886568.png)
+
 
 # 트랜잭션 구조
 ```
