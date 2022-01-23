@@ -12,7 +12,7 @@
 ## 3. 영지식성
  어떤문장이 참이면 검증자는 문장의 참 거짓 이외에는 아무것도 알 수 없어야 한다.
  
-### 비유를 통한 예시
+## :baby:비유를 통한 예시
 ![300px-Zkip_alibaba2](https://user-images.githubusercontent.com/89236248/150671970-dfe6e42d-d827-46c9-8ed2-a402a4a39b19.png)
 
 
