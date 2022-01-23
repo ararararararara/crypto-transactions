@@ -13,7 +13,7 @@
  어떤문장이 참이면 검증자는 문장의 참 거짓 이외에는 아무것도 알 수 없어야 한다.
  
 ### 비유를 통한 예시
-https://commons.wikimedia.org/wiki/File:Zkip_alibaba2.png
+![1](https://commons.wikimedia.org/wiki/File:Zkip_alibaba2.png)
 증명자와 검증자가 있을때 증명자는 동굴안에 있는 비밀 문의 열쇠를 갖고 있다.
 동굴은 A와 B통로로 되어있고 입구 반대편에 비밀문이 있다.
 증명자는 검증자에게 열쇠를 갖고 있다는 것을 알려야 하지만 다른 사람ㅁ에게 자신에 관한 비밀이 알려지는 것을 원치 않는다.
