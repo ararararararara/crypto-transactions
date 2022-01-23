@@ -1,4 +1,4 @@
-# crypto-transactions
+#:key: crypto-transactions
 
 # 영지식 증명
 암호학에서 누군가가 상대방에게 어떤 사항이 참임을 증명할 때, 그 문장이 참 거짓 여부를 제외한 어떤 것도 노출되지 않는 상호작용 절차를 말한다.
