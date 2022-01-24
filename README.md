@@ -120,3 +120,25 @@ const signTxIn = (transaction, txInIndex, privateKey, aUnspentTxOuts) => {
 
 트랜잭션 입력에 서명할 때 txId만 서명됩니다. 트랜잭션의 내용이 수정되면 txId가 변경되어 트랜잭션과 서명이 무효화됩니다.
 
+# 미사용 트랜잭션 출력
+
+ 미사용 트랜잭션 출력의 데이터 구조
+ 
+ ```
+ class UnspentTxOut {
+    txOutId;;
+    txOutIndex ;
+    address;
+    amount;
+
+    constructor(txOutId, txOutIndex, address, amount) {
+        this.txOutId = txOutId;
+        this.txOutIndex = txOutIndex;
+        this.address = address;
+        this.amount = amount;
+    }
+}
+ ```
+ 
+
+ 
