@@ -219,8 +219,7 @@ const signTxIn = (transaction, txInIndex, privateKey, aUnspentTxOuts) => {
  const COINBASE_AMOUNT = 50; // 입력은 없고 출력만..블럭을 찾으면 50개동전을 보상
  ```
  
- 코인베이스 유효성 검사 - 트랜잭션 유효성 검사와 다르다
- 
+ 코인베이스 유효성 검사
  ```
  const validateCoinbaseTx = (transaction, blockIndex) => {
     console.log("transaction============ \n", transaction)
