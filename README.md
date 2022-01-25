@@ -139,6 +139,117 @@ const signTxIn = (transaction, txInIndex, privateKey, aUnspentTxOuts) => {
     }
 }
  ```
+ # 미사용 트랜잭션 출력 업데이트
  
+  먼저 미사용 트랜잭션 출력 검색
+  
+ ```
+  const newUnspentTxOuts = aTransactions
+        .map(t => {
+            return t.txOuts.map((txOut, index) => (
+                new UnspentTxOut(t.id, index, txOut.address, txOut.amount)
+            ))
+        })
+        .reduce((a, b) => a.concat(b), []);
+ ```
+ 
+ 새 트랜잭션 검색
+ 
+ ```
+  const consumedTxOuts = aTransactions
+        .map((t) => t.txIns)
+        .reduce((a, b) => a.concat(b), [])
+        .map((txIn) => new UnspentTxOut(txIn.txOutId, txIn.txOutIndex, '', 0));
+ ```
+ 
+ 기존 트랜잭션 출력 제거하고 추가
+ 
+ ```
+   const resultingUnspentTxOuts = aUnspentTxOuts
+        .filter(((uTxO) => !findUnspentTxOut(uTxO.txOutId, uTxO.txOutIndex, consumedTxOuts)))
+        .concat(newUnspentTxOuts);
 
+ ```
+ 
+  # 트랜잭션 유효성 검사
+  
+  올바른 트랜잭션 구조
+ ```
+ const validateTransaction = (transaction, aUnspentTxOuts) => {
+    if (!isValidTransactionStructure(transaction)) {
+        return false;
+    }
+ ```
+ 
+ 트랜잭션 ID 검증
+```
+ if (getTransactionId(transaction) !== transaction.id) {
+        console.log('invalid tx id: ' + transaction.id);
+        return false;
+    }
+```
+
+트랜잭션 txIns 검증
+```
+ const hasValidTxIns = transaction.txIns
+        .map((txIn) => validateTxIn(txIn, transaction, aUnspentTxOuts))
+        .reduce((a, b) => a && b, true);
+    if (!hasValidTxIns) {
+        console.log('referenced txOut not found: ' + transaction.id);
+        return false;
+    }
+```
+
+트랜잭션 txOuts의 검증 - txIns의 합의 값과 txOuts의 합이 같은지?
+ ```
+   const totalTxInValues = transaction.txIns
+        .map((txIn) => getTxInAmount(txIn, aUnspentTxOuts))
+        .reduce((a, b) => (a + b), 0);
+    const totalTxOutValues = transaction.txOuts
+        .map((txOut) => txOut.amount)
+        .reduce((a, b) => (a + b), 0);
+    if (totalTxOutValues !== totalTxInValues) {
+        console.log('totalTxOutValues !== totalTxInValues in tx: ' + transaction.id);
+        return false;
+    }
+ ```
+ # 코인베이스 거래
+ 
+ ```
+ const COINBASE_AMOUNT = 50; // 입력은 없고 출력만..블럭을 찾으면 50개동전을 보상
+ ```
+ 
+ 코인베이스 유효성 검사 - 트랜잭션 유효성 검사와 다르다
+ 
+ ```
+ const validateCoinbaseTx = (transaction, blockIndex) => {
+    console.log("transaction============ \n", transaction)
+    console.log("transaction.txouts============ \n", transaction.txOuts)
+    if (transaction == null) {
+        console.log('the first transaction in the block must be coinbase transaction');//첫 transaction이 코인베이스 거래인지
+        return false;
+    }
+    if (getTransactionId(transaction) !== transaction.id) {
+        console.log('invalid coinbase tx id: ' + transaction.id); // 유효한 transaction id 인지
+        return false;
+    }
+    if (transaction.txIns.length !== 1) {
+        console.log('one txIn must be specified in the coinbase transaction'); //txIn 하나는 거래하나씩 지정
+        return;
+    }
+    if (transaction.txIns[0].txOutIndex !== blockIndex) {
+        console.log('the txIn index in coinbase tx must be the block height'); //처음 txIn인덱스는 블록높이와 같아야 함
+        return false;
+    }
+    if (transaction.txOuts.length !== 1) {
+        console.log('invalid number of txOuts in coinbase transaction'); // txOuts 하나는 거래하나씩 지정
+        return false;
+    }
+    if (transaction.txOuts[0].amount !== COINBASE_AMOUNT) {
+        console.log('invalid coinbase amount in coinbase transaction'); // txOuts양이 코인 전체의 값과 같은지
+        return false;
+    }
+    return true;
+};
+ ```
  
